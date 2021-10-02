@@ -331,7 +331,12 @@ const app = {
   },
 
   SetConfigBegin: function(){
-    indexSong = this.config.indexSong;
+    if(this.config.indexSong == undefined){
+      indexSong = 0;
+    }
+    else{
+      indexSong = this.config.indexSong;
+    }
     isRepeat = this.config.isRepeat;
     isRandom = this.config.isRandom;
   },
