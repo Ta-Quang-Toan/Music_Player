@@ -139,7 +139,7 @@ const app = {
           arrList.shift();
         }
       }
-      console.log(arrList);
+
       header.textContent = this.currentSong.name;
       cdThumb.style.backgroundImage = `url(${this.currentSong.img})`;
       audio.src = this.currentSong.path; 
