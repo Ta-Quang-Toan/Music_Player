@@ -331,6 +331,7 @@ const app = {
   },
 
   SetConfigBegin: function(){
+    console.log(this.config);
     if(this.config.indexSong == undefined){
       indexSong = 0;
     }
