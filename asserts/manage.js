@@ -121,6 +121,7 @@ const app = {
   },
 
   loadCurrentSong: function(){
+      this.setConfig('indexSong', Number(this.indexSong));
       header.textContent = this.currentSong.name;
       cdThumb.style.backgroundImage = `url(${this.currentSong.img})`;
       audio.src = this.currentSong.path; 
@@ -257,15 +258,25 @@ const app = {
     //Turn On Random Song
     randombtn.onclick = function(){
       _this.isRandom = !_this.isRandom;
-      _this.setConfig('isRandom', _this.isRandom); 
       randombtn.classList.toggle('active', _this.isRandom);
+      if(!!_this.isRepeat){
+        _this.isRepeat = !_this.isRepeat;
+        repeatbtn.classList.toggle('active', _this.isRepeat);
+      }
+      _this.setConfig('isRandom', _this.isRandom); 
+      _this.setConfig('isRepeat', _this.isRepeat);
     }
 
     //Turn On Repeat Song
     repeatbtn.onclick = function(){
       _this.isRepeat = !_this.isRepeat;
-      _this.setConfig('isRepeat', _this.isRepeat);
       repeatbtn.classList.toggle('active', _this.isRepeat);
+      if(!!_this.isRandom){
+        _this.isRandom = !_this.isRandom;
+        randombtn.classList.toggle('active', _this.isRandom);
+      }
+      _this.setConfig('isRepeat', _this.isRepeat);
+      _this.setConfig('isRandom', _this.isRandom); 
     }
 
     // Solve When Song End
@@ -290,17 +301,20 @@ const app = {
   },
 
   SetConfigBegin: function(){
+    if(this.indexSong){
+      this.indexSong = this.config.indexSong;
+    }
     this.isRepeat = this.config.isRepeat;
     this.isRandom = this.config.isRandom;
   },
 
   
   start: function(){
-    this.SetConfigBegin();
-
     this.defineProperties();
 
     this.renderSongs();
+
+    this.SetConfigBegin();
 
     this.loadCurrentSong();
     
