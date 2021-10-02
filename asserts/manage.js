@@ -14,14 +14,17 @@ const player = $('.player'),
       prevbtn = $('.btn-prev'),
       randombtn = $('.btn-random'),
       repeatbtn = $('.btn-repeat'),
-      playlist = $('.playlist');
+      playlist = $('.playlist'),
+      timeupdate = $('#timeupdate');
 
+var indexSong = 0,
+    isPlaying = false,
+    isRandom = false,
+    isRepeat = false,
+    arrList = [];
 
 const app = {
-  indexSong: 0,
-  isPlaying: false,
-  isRandom: false,
-  isRepeat: false,
+  
   config: JSON.parse(localStorage.getItem(KEY_OF_MUSIC)) || {},
   
   songs: [
@@ -97,14 +100,14 @@ const app = {
   defineProperties: function(){
       Object.defineProperty(this, 'currentSong', {
           get: function(){
-              return this.songs[this.indexSong]
+              return this.songs[indexSong]
           }
       })
   },
 
   renderSongs: function(){
       var htmls=this.songs.map((item, index) => {
-          return `<div class="song ${index === this.indexSong ? 'active':''}" data-index="${index}">
+          return `<div class="song ${index === indexSong ? 'active':''}" data-index="${index}">
                       <div class="thumb" style="background-image: url('${item.img}')">
                       </div>
                       <div class="body">
@@ -121,16 +124,31 @@ const app = {
   },
 
   loadCurrentSong: function(){
-      this.setConfig('indexSong', Number(this.indexSong));
+      this.setConfig('indexSong', indexSong);
+      
+      var isExist = arrList.some(item => {
+        return item == indexSong;
+      });
+
+      if(!isExist){
+        arrList.push(indexSong);
+      }
+
+      if(arrList.length == this.songs.length){
+        while(arrList.length >1){
+          arrList.shift();
+        }
+      }
+      console.log(arrList);
       header.textContent = this.currentSong.name;
       cdThumb.style.backgroundImage = `url(${this.currentSong.img})`;
       audio.src = this.currentSong.path; 
   },
 
   nextSong: function(){
-    this.indexSong++;
-    if(this.indexSong >= this.songs.length){
-      this.indexSong=0;
+    indexSong++;
+    if(indexSong >= this.songs.length){
+      indexSong=0;
     }
     this.loadCurrentSong();
     this.renderSongs();
@@ -138,9 +156,9 @@ const app = {
   },
 
   prevSong: function(){
-    this.indexSong--;
-    if(this.indexSong < 0){
-      this.indexSong=this.songs.length - 1;
+    indexSong--;
+    if(indexSong < 0){
+      indexSong=this.songs.length - 1;
     }
     this.loadCurrentSong();
     this.renderSongs();
@@ -148,13 +166,17 @@ const app = {
   },
 
   PlayRandomSong: function(){
-    let curIndex;
+    let curIndex, isExist = true;
 
-    do{
+    while(isExist){
       curIndex = Math.floor(Math.random() * this.songs.length);
-    } while(curIndex === this.indexSong);
+      var kt = arrList.some(item => {
+        return item == curIndex;
+      })
+      isExist = kt;
+    }
 
-    this.indexSong = curIndex;
+    indexSong = curIndex;
     
     this.loadCurrentSong();
     this.renderSongs();
@@ -168,6 +190,12 @@ const app = {
         block: 'center'
       })
     }, 300);
+  },
+
+  getTime: function(value){
+    var min = Math.floor(value / 60);
+    value %= 60;
+    return `${min<10 ? '0'+ min : min}:${value < 10 ? '0' + value : value}`;
   },
 
   handleEvents: function(){
@@ -221,6 +249,7 @@ const app = {
       if(audio.duration){
         const currentProgress = audio.currentTime / audio.duration * 100;
         progress.value = currentProgress;
+        timeupdate.innerHTML = _this.getTime(Math.floor(audio.currentTime)) + '/' + _this.getTime(Math.floor(audio.duration));
       }
     }
 
@@ -228,6 +257,7 @@ const app = {
     progress.onchange = function(index){
       const seekTime = audio.duration / 100 * index.target.value;
       audio.currentTime = Math.floor(seekTime);
+      timeupdate.innerHTML = _this.getTime(Math.floor(audio.currentTime)) + '/' + _this.getTime(Math.floor(audio.duration));
       if(!_this.isPlaying){
         audio.play();
       }
@@ -235,7 +265,7 @@ const app = {
 
     //Next song
     nextbtn.onclick = function(){
-      if(!_this.isRandom){
+      if(!isRandom){
         _this.nextSong();
       }
       else{
@@ -246,7 +276,7 @@ const app = {
 
     //Prev song
     prevbtn.onclick = function(){
-      if(!_this.isRandom){
+      if(!isRandom){
         _this.prevSong();
       }
       else{
@@ -257,31 +287,31 @@ const app = {
 
     //Turn On Random Song
     randombtn.onclick = function(){
-      _this.isRandom = !_this.isRandom;
-      randombtn.classList.toggle('active', _this.isRandom);
-      if(!!_this.isRepeat){
-        _this.isRepeat = !_this.isRepeat;
-        repeatbtn.classList.toggle('active', _this.isRepeat);
+      isRandom = !isRandom;
+      randombtn.classList.toggle('active', isRandom);
+      if(!!isRepeat){
+        isRepeat = !isRepeat;
+        repeatbtn.classList.toggle('active', isRepeat);
       }
-      _this.setConfig('isRandom', _this.isRandom); 
-      _this.setConfig('isRepeat', _this.isRepeat);
+      _this.setConfig('isRandom', isRandom); 
+      _this.setConfig('isRepeat', isRepeat);
     }
 
     //Turn On Repeat Song
     repeatbtn.onclick = function(){
-      _this.isRepeat = !_this.isRepeat;
-      repeatbtn.classList.toggle('active', _this.isRepeat);
-      if(!!_this.isRandom){
-        _this.isRandom = !_this.isRandom;
-        randombtn.classList.toggle('active', _this.isRandom);
+      isRepeat = !isRepeat;
+      repeatbtn.classList.toggle('active', isRepeat);
+      if(!!isRandom){
+        isRandom = !isRandom;
+        randombtn.classList.toggle('active', isRandom);
       }
-      _this.setConfig('isRepeat', _this.isRepeat);
-      _this.setConfig('isRandom', _this.isRandom); 
+      _this.setConfig('isRepeat', isRepeat);
+      _this.setConfig('isRandom', isRandom); 
     }
 
     // Solve When Song End
     audio.onended = function(){
-      if(!_this.isRepeat){
+      if(!isRepeat){
         nextbtn.click();
       }
       else{
@@ -292,7 +322,7 @@ const app = {
     playlist.onclick = function(e){
       const songNode = e.target.closest('.song:not(.active)');
       if(songNode || e.target.closest('.option')){
-        _this.indexSong = Number(songNode.dataset.index);
+        indexSong = Number(songNode.dataset.index);
         _this.loadCurrentSong();
         _this.renderSongs();
         audio.play();
@@ -301,27 +331,27 @@ const app = {
   },
 
   SetConfigBegin: function(){
-    if(this.indexSong){
-      this.indexSong = this.config.indexSong;
-    }
-    this.isRepeat = this.config.isRepeat;
-    this.isRandom = this.config.isRandom;
+    indexSong = this.config.indexSong;
+    isRepeat = this.config.isRepeat;
+    isRandom = this.config.isRandom;
   },
 
   
   start: function(){
     this.defineProperties();
 
-    this.renderSongs();
-
     this.SetConfigBegin();
+
+    this.renderSongs();
 
     this.loadCurrentSong();
     
     this.handleEvents();
 
-    repeatbtn.classList.toggle('active', this.isRepeat);
-    randombtn.classList.toggle('active', this.isRandom);
+    repeatbtn.classList.toggle('active',isRepeat);
+    randombtn.classList.toggle('active',isRandom);
+
+    audio.play();
   }
 }
 

@@ -129,6 +129,12 @@
     background-color: var(--primary-color);
     cursor: pointer;
   }
+
+  #timeupdate{
+    color: #ec1f55;
+    font-size: 15px;
+    float: right;
+  }
   
   /* PLAYLIST */
   .playlist {
