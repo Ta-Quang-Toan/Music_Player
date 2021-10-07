@@ -339,7 +339,6 @@ const app = {
         this.defineProperties();
 
         this.SetConfigBegin();
-        console.log(this.config);
 
         this.renderPlaylist();
 
