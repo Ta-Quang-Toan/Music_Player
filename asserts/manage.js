@@ -130,11 +130,13 @@ const app = {
             arrList.push(indexSong);
         }
 
+        //when arr full
         if(arrList.length == this.songs.length){
             while(arrList.length > 1){
                 arrList.shift();
             }
         }
+        
         header.textContent = this.currentSong.name;
         cdThumb.style.backgroundImage = `url(${this.currentSong.img})`;
         audio.src = this.currentSong.path; 
@@ -294,8 +296,8 @@ const app = {
                 isRepeat = !isRepeat;
                 repeatbtn.classList.toggle('active',isRepeat);
             }
-            this.setConfig('isRandom',isRandom);
-            this.setConfig('isRepeat',isRepeat);
+            _this.setConfig('isRandom',isRandom);
+            _this.setConfig('isRepeat',isRepeat);
         } 
 
         // Repeat BTN
@@ -306,8 +308,8 @@ const app = {
                 isRandom = !isRandom;
                 randombtn.classList.toggle('active',isRandom);
             }
-            this.setConfig('isRandom',isRandom);
-            this.setConfig('isRepeat',isRepeat);
+            _this.setConfig('isRandom',isRandom);
+            _this.setConfig('isRepeat',isRepeat);
         }
 
         // Playlist click
@@ -337,6 +339,7 @@ const app = {
         this.defineProperties();
 
         this.SetConfigBegin();
+        console.log(this.config);
 
         this.renderPlaylist();
 
