@@ -240,6 +240,7 @@ const app = {
         // Time On Playing
         audio.ontimeupdate = function(){
             if(audio.duration){
+                _this.setConfig('currentTime',audio.currentTime);
                 const currentProgress = audio.currentTime / audio.duration *100;
                 progress.value = currentProgress;
                 timeupdate.innerHTML = _this.getTime(Math.floor(audio.currentTime)) + '/' + _this.getTime(Math.floor(audio.duration));
@@ -331,6 +332,7 @@ const app = {
         else{
             indexSong = this.config.indexSong;
         }
+        audio.currentTime = this.config.currentTime;
         isRepeat = this.config.isRepeat;
         isRandom = this.config.isRandom;
     },
