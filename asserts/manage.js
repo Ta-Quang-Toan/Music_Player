@@ -336,7 +336,12 @@ const app = {
         else{
             indexSong = this.config.indexSong;
         }
-        audio.currentTime = this.config.currentTime;
+        if(!!this.config.currentTime){
+            audio.currentTime = this.config.currentTime;
+        }
+        else{
+            audio.currentTime = 0;
+        }
         if(!!audio.currentTime) isContinue = true;
         isRepeat = this.config.isRepeat;
         isRandom = this.config.isRandom;
