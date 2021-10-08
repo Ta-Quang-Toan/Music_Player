@@ -15,12 +15,16 @@ const player = $('.player'),
       randombtn = $('.btn-random'),
       repeatbtn = $('.btn-repeat'),
       playlist = $('.playlist'),
-      timeupdate = $('#timeupdate');
+      timeupdate = $('#timeupdate'),
+      modalYbtn = $('#yes'),
+      modalXbtn = $('#no'),
+      modal = $('.modal');
 
 var indexSong = 0,
 isPlaying = false,
 isRandom = false,
 isRepeat = false,
+isContinue = false,
 arrList = [];
 
 const app = {
@@ -333,6 +337,7 @@ const app = {
             indexSong = this.config.indexSong;
         }
         audio.currentTime = this.config.currentTime;
+        if(!!audio.currentTime) isContinue = true;
         isRepeat = this.config.isRepeat;
         isRandom = this.config.isRandom;
     },
@@ -345,13 +350,25 @@ const app = {
         this.renderPlaylist();
 
         this.loadCurrentSong();
+
+        if(!!isContinue){
+            modal.classList.add('open');
+            modalXbtn.addEventListener('click', function(){
+                audio.currentTime = 0;
+                modal.classList.remove('open');
+                audio.play(); 
+            });
+            modalYbtn.addEventListener('click',function(){
+                modal.classList.remove('open');
+                audio.play();
+            })
+        }
         
         this.handleEvents();
 
         repeatbtn.classList.toggle('active', isRepeat);
         randombtn.classList.toggle('active', isRandom);
 
-        audio.play();
     }
 }
 
