@@ -336,7 +336,7 @@ const app = {
         else{
             indexSong = this.config.indexSong;
         }
-        if(!!this.config.currentTime){
+        if(this.config?.currentTime){
             audio.currentTime = this.config.currentTime;
         }
         else{
