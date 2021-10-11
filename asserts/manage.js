@@ -188,7 +188,6 @@ const app = {
             var kt = arrList.some(item => item == curIndex);
             isExist = kt;
         }
-        console.log(arrList);
         indexSong = curIndex;
         this.loadCurrentSong();
         this.renderPlaylist();
