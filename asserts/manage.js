@@ -188,7 +188,7 @@ const app = {
             var kt = arrList.some(item => item == curIndex);
             isExist = kt;
         }
-
+        console.log(arrList);
         indexSong = curIndex;
         this.loadCurrentSong();
         this.renderPlaylist();
@@ -219,7 +219,7 @@ const app = {
 
         // Play and Pause Song
         playbtn.onclick = function(){
-            if(_this.isPlaying){
+            if(isPlaying){
                 audio.pause();
             }
             else{
@@ -229,14 +229,14 @@ const app = {
 
         // When Pausing
         audio.onpause = function(){
-            _this.isPlaying = false;
+            isPlaying = false;
             player.classList.remove('playing');
             cdThumbAnimate.pause();
         }
 
         // When Playing
         audio.onplay = function(){
-            _this.isPlaying = true;
+            isPlaying = true;
             player.classList.add('playing');
             cdThumbAnimate.play();
         }
@@ -256,7 +256,7 @@ const app = {
             const seekTime = audio.duration / 100*index.target.value;
             audio.currentTime = Math.floor(seekTime);
             timeupdate.innerHTML = _this.getTime(Math.floor(audio.currentTime)) + '/' + _this.getTime(Math.floor(audio.duration));
-            if(!_this.isPlaying){
+            if(!isPlaying){
                 audio.play();
             }
         }
@@ -273,7 +273,7 @@ const app = {
 
         // Next Song BTN
         nextbtn.onclick = function(){
-            if(!_this.isRandom){
+            if(!isRandom){
                 _this.nextSong();
             }
             else{
@@ -284,7 +284,7 @@ const app = {
         
         // Prev Song BTN
         prevbtn.onclick = function(){
-            if(!_this.isRandom){
+            if(!isRandom){
                 _this.prevSong();
             }
             else{
@@ -339,12 +339,9 @@ const app = {
         if(this.config?.currentTime){
             audio.currentTime = this.config.currentTime;
         }
-        else{
-            audio.currentTime = 0;
-        }
         if(!!audio.currentTime) isContinue = true;
-        isRepeat = this.config.isRepeat;
-        isRandom = this.config.isRandom;
+        if(!!this.config?.isRepeat) isRepeat = true;
+        if(!!this.config?.isRandom) isRandom = true;
     },
 
     start: function(){
