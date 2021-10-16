@@ -62,13 +62,6 @@ const app ={
             path: './asserts/music/FlexingTrenCircleK.mp3',
             img: './asserts/img/flexingtrencircleK.jpg'
         },
-    
-        {
-            name: 'Industry Baby',
-            singer: 'Lil Nas X',
-            path: './asserts/music/IndustryBaby.mp3',
-            img: './asserts/img/IndustryBaby.jpg'
-        },
 
         {
             name: 'Một Ngày Thu Hà Nội',
@@ -117,13 +110,6 @@ const app ={
             singer: 'Low G',
             path: './asserts/music/SimpleCypher.mp3',
             img: './asserts/img/simplecypher.jpg'
-        },
-    
-        {
-            name: 'Tales Of Dominica',
-            singer: 'Lil Nas X',
-            path: './asserts/music/TalesOfDominica.mp3',
-            img: './asserts/img/talesOfDominica.jpg'
         },
 
         {
