@@ -48,6 +48,13 @@ const app ={
             path: './asserts/music/EmGai.mp3',
             img: './asserts/img/emGai.jpg'
         },
+
+        {
+            name: 'Chán Gái 707',
+            singer: 'Low G',
+            path: './asserts/music/changai707.mp3',
+            img: './asserts/img/changai707.jfif',
+        },
     
         {
             name: 'Flexing Trên Circle K',
@@ -62,6 +69,20 @@ const app ={
             path: './asserts/music/IndustryBaby.mp3',
             img: './asserts/img/IndustryBaby.jpg'
         },
+
+        {
+            name: 'Một Ngày Thu Hà Nội',
+            singer: 'Low G',
+            path: './asserts/music/motngaythuhanoi.mp3',
+            img: './asserts/img/motngaythuhanoi.jpg',
+        },
+
+        {
+            name: 'Tán Gái 101',
+            singer: 'Low G',
+            path: './asserts/music/tangai101.mp3',
+            img: './asserts/img/tangai101.jpg',
+        },
     
         {
             name: 'On Top',
@@ -69,12 +90,26 @@ const app ={
             path: './asserts/music/OnTop.mp3',
             img: './asserts/img/OnTop.jpg'
         },
+
+        {
+            name: 'Tán Gái 606',
+            singer: 'Low G',
+            path: './asserts/music/tangai606.mp3',
+            img: './asserts/img/tangai606.jpg',
+        },
     
         {
             name: 'She Make It Clap',
             singer: 'Low G',
             path: './asserts/music/SheMakeItClap.mp3',
             img: './asserts/img/shemakeitclap.jpg'
+        },
+
+        {
+            name: 'ANH YÊU EM',
+            singer: 'VOID',
+            path: './asserts/music/ANHYEUEM.exe.mp3',
+            img: './asserts/img/anhyeuem.jpg',
         },
     
         {
@@ -89,6 +124,13 @@ const app ={
             singer: 'Lil Nas X',
             path: './asserts/music/TalesOfDominica.mp3',
             img: './asserts/img/talesOfDominica.jpg'
+        },
+
+        {
+            name: 'Cắt Kéo Trên Lênin',
+            singer: 'Low G',
+            path: './asserts/music/catkeotrenlenin.mp3',
+            img: './asserts/img/catkeotrenlenin.jpg'
         },
     
         {
