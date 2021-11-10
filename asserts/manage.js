@@ -36,6 +36,13 @@ const app ={
     
     songs: [
         {
+            name: 'An Thần',
+            singer: 'Low G',
+            path: './asserts/music/AnThan.mp3',
+            img: './asserts/img/anthan.jpg'
+        },
+
+        {
             name: 'Đi Bể Bơi',
             singer: 'Low G',
             path: './asserts/music/DiBeBoi.mp3',
